@@ -26,6 +26,18 @@
   --creaition-input-height: 50px;
 }
 
+/* Global styles for Material Dialog */
+::ng-deep .ai-generation-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0 !important;
+    border-radius: var(--creaition-border-radius-card) !important;
+  }
+  
+  .mat-mdc-dialog-surface {
+    border-radius: var(--creaition-border-radius-card) !important;
+  }
+}
+
 /* Global Font Settings */
 * {
   font-family: var(--creaition-font-primary);
