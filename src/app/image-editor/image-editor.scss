@@ -1,5 +1,359 @@
-/* Creaition 样式可以加在这里 */
-div {
+:host {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 600px;
+  height: 100%;
+  background-color: var(--creaition-background);
+}
+
+.editor-container {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+  background-color: var(--creaition-white);
+  border-radius: var(--creaition-border-radius-card);
+  overflow: visible; // Changed from hidden to visible
+  display: flex;
+  flex-direction: column;
+  
+  // Ensure the editor container is visible
+  > div {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1;
+    min-height: 400px;
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+  }
+
+  ::ng-deep {
+    // Override Tui.ImageEditor styles to match Creaition design
+    .tui-image-editor-container {
+      font-family: var(--creaition-font-primary);
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 400px !important;
+      display: block !important;
+      visibility: visible !important;
+      position: relative !important;
+      
+      // CRITICAL: Ensure ALL canvas elements are always visible
+      canvas.lower-canvas,
+      canvas.upper-canvas,
+      canvas[class*="canvas"],
+      .tui-image-editor-canvas,
+      .tui-image-editor-canvas-container,
+      .tui-image-editor-canvas-wrapper,
+      .tui-image-editor-canvas-area,
+      .tui-image-editor-wrap .tui-image-editor-canvas-container,
+      .tui-image-editor-main-container canvas,
+      .tui-image-editor-main-container .tui-image-editor-canvas-container,
+      div canvas,
+      div[class*="canvas"]:not([class*="menu"]) {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        position: relative !important;
+        z-index: 10 !important;
+        margin: 0 auto !important;
+      }
+      
+      // Specifically target the canvas container
+      .tui-image-editor-canvas-container {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 400px !important;
+        position: relative !important;
+        overflow: visible !important;
+      }
+      
+      // Ensure all divs containing canvas are visible
+      div:has(canvas),
+      div[class*="wrap"]:has(canvas),
+      div[class*="main"]:has(canvas) {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      // Hide TOAST UI Image Editor logo/branding - comprehensive selectors
+      *[class*="logo"]:not([class*="canvas"]),
+      *[class*="branding"]:not([class*="canvas"]),
+      *[class*="toast"]:not([class*="canvas"]),
+      *[id*="logo"]:not([id*="canvas"]),
+      *[id*="branding"]:not([id*="canvas"]),
+      *[id*="toast"]:not([id*="canvas"]) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+      }
+    }
+
+    // Hide Tui.ImageEditor's default toolbar and UI elements
+    // We use our custom ToolbarComponent and PropertiesPanelComponent instead
+    .tui-image-editor-main-container {
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: row !important;
+      
+      // Hide left sidebar menu (icon toolbar) - comprehensive selectors
+      // BUT exclude canvas-related elements
+      .tui-image-editor-menu:not([class*="canvas"]),
+      .tui-image-editor-menu-item:not([class*="canvas"]),
+      .tui-image-editor-menu-item.active:not([class*="canvas"]),
+      .tui-image-editor-menu-wrap:not([class*="canvas"]),
+      .tui-image-editor-menu-area:not([class*="canvas"]),
+      .tui-image-editor-menu-list:not([class*="canvas"]) {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+      }
+      
+      // Hide toolbar/sidebar but NOT canvas
+      [class*="menu"]:not([class*="canvas"]):not(canvas),
+      [class*="toolbar"]:not([class*="canvas"]):not(canvas),
+      [class*="sidebar"]:not([class*="canvas"]):not(canvas) {
+        &:not(.tui-image-editor-canvas-container):not(.tui-image-editor-canvas-wrapper):not(.tui-image-editor-canvas-area) {
+          display: none !important;
+          visibility: hidden !important;
+          width: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+      }
+      
+      // Hide header with load/download buttons - comprehensive hiding
+      .tui-image-editor-header,
+      .tui-image-editor-header .tui-image-editor-controls,
+      .tui-image-editor-load-btn,
+      .tui-image-editor-download-btn,
+      button[class*="load"],
+      button[class*="download"],
+      [class*="load-btn"],
+      [class*="download-btn"],
+      [id*="load"],
+      [id*="download"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+        pointer-events: none !important;
+      }
+      
+      // Hide submenu (appears when clicking menu items)
+      .tui-image-editor-submenu,
+      .tui-image-editor-submenu-wrap {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      
+      // Hide TOAST UI Image Editor logo/branding
+      .tui-image-editor-logo,
+      .tui-image-editor-logo-wrap,
+      .tui-image-editor-branding,
+      [class*="logo"],
+      [class*="branding"],
+      [class*="toast"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+      }
+      
+      // Keep only the canvas area visible
+      .tui-image-editor-wrap {
+        // Hide menu but keep canvas wrapper
+        .tui-image-editor-menu-wrap,
+        .tui-image-editor-menu-area {
+          display: none !important;
+          visibility: hidden !important;
+          width: 0 !important;
+          height: 0 !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+        
+        // Ensure canvas wrapper is visible
+        .tui-image-editor-canvas-wrapper,
+        .tui-image-editor-canvas-area {
+          display: block !important;
+          visibility: visible !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+      
+      // CRITICAL: Ensure canvas takes full width and remove left margin
+      .tui-image-editor-canvas-container,
+      .tui-image-editor-canvas-wrapper,
+      .tui-image-editor-canvas-area,
+      .tui-image-editor-wrap > div:not([class*="menu"]):not([class*="header"]) {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 400px !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        flex: 1 !important;
+        overflow: visible !important;
+        
+        canvas {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+          width: auto !important;
+          height: auto !important;
+          position: relative !important;
+          z-index: 10 !important;
+        }
+      }
+      
+      // Hide any icon buttons or clickable elements in sidebar
+      .tui-image-editor-menu-item,
+      button[class*="menu"],
+      div[class*="menu-item"],
+      svg[class*="icon"],
+      [role="button"][class*="menu"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
+    
+    // Hide any remaining UI elements
+    .tui-image-editor-main {
+      .tui-image-editor-menu-area,
+      [class*="menu-area"],
+      [class*="sidebar"] {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+    }
+    
+    // Global hide for any menu/toolbar elements, but keep canvas visible
+    .tui-image-editor-container {
+      // Ensure canvas and canvas-related elements are visible
+      .tui-image-editor-canvas-container,
+      .tui-image-editor-canvas,
+      canvas,
+      .tui-image-editor-canvas-wrapper,
+      .tui-image-editor-canvas-area {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      // Hide menu/toolbar but exclude canvas
+      [class*="menu"]:not([class*="canvas"]),
+      [class*="toolbar"]:not([class*="canvas"]),
+      [class*="sidebar"]:not([class*="canvas"]),
+      [id*="menu"]:not([id*="canvas"]),
+      [id*="toolbar"]:not([id*="canvas"]) {
+        &:not(.tui-image-editor-canvas-container):not(.tui-image-editor-canvas):not(canvas) {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          width: 0 !important;
+          height: 0 !important;
+        }
+      }
+    }
+    
+    // Hide logo from all possible locations
+    .tui-image-editor-container {
+      .tui-image-editor-logo,
+      .tui-image-editor-logo-wrap,
+      .tui-image-editor-branding,
+      [class*="logo"],
+      [class*="branding"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+    }
+
+    // Button styles (for any remaining buttons)
+    .tui-image-editor-button {
+      border-radius: var(--creaition-border-radius-button) !important;
+      min-height: var(--creaition-button-height) !important;
+      font-variation-settings: 
+        'wght' var(--creaition-font-weight-normal),
+        'slnt' var(--creaition-font-slant-normal);
+      transition: all 0.2s ease;
+
+      &:hover {
+        font-variation-settings: 
+          'wght' var(--creaition-font-weight-medium),
+          'slnt' var(--creaition-font-slant-italic);
+      }
+    }
+
+    // Input styles
+    .tui-image-editor-input {
+      border-radius: var(--creaition-border-radius-input) !important;
+      height: var(--creaition-input-height) !important;
+    }
+
+    // Submenu styles
+    .tui-image-editor-submenu {
+      background-color: var(--creaition-white) !important;
+      border-radius: var(--creaition-border-radius-card) !important;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .editor-container {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .editor-container {
+    min-height: 300px;
+  }
 }

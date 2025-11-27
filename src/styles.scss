@@ -1,1 +1,117 @@
-/* You can add global styles to this file, and also import other style files */
+/* Creaition Design System */
+:root {
+  /* Colors */
+  --creaition-primary-grey: #efefee;
+  --creaition-secondary-grey: #bebebe;
+  --creaition-background: #f0f0f0;
+  --creaition-white: #ffffff;
+  --creaition-black: #000000;
+  --creaition-text-color: #000000;
+
+  /* Typography */
+  --creaition-font-primary: 'strokeWeight(var)', 'Eina03-Regular', sans-serif;
+  --creaition-font-weight-normal: 60;
+  --creaition-font-weight-medium: 80;
+  --creaition-font-weight-semibold: 120;
+  --creaition-font-slant-normal: 0;
+  --creaition-font-slant-italic: 12;
+
+  /* Border Radius */
+  --creaition-border-radius-button: 50px;
+  --creaition-border-radius-input: 0px;
+  --creaition-border-radius-card: 1rem;
+
+  /* Dimensions */
+  --creaition-button-height: 35px;
+  --creaition-input-height: 50px;
+}
+
+/* Global Font Settings */
+* {
+  font-family: var(--creaition-font-primary);
+  font-variation-settings: 
+    'wght' var(--creaition-font-weight-normal),
+    'slnt' var(--creaition-font-slant-normal);
+}
+
+/* Button Base Styles */
+.creaition-button {
+  min-height: var(--creaition-button-height);
+  border-radius: var(--creaition-border-radius-button);
+  background-color: var(--creaition-white);
+  color: var(--creaition-text-color);
+  border: 1px solid var(--creaition-secondary-grey);
+  font-variation-settings: 
+    'wght' var(--creaition-font-weight-normal),
+    'slnt' var(--creaition-font-slant-normal);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  padding: 8px 16px;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+
+  // Override Material button styles that might cause clipping
+  .mdc-button__label {
+    overflow: visible !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+  }
+
+  &:hover {
+    font-variation-settings: 
+      'wght' var(--creaition-font-weight-medium),
+      'slnt' var(--creaition-font-slant-italic);
+    background-color: var(--creaition-primary-grey);
+  }
+
+  &:active {
+    font-variation-settings: 
+      'wght' var(--creaition-font-weight-semibold),
+      'slnt' var(--creaition-font-slant-normal);
+  }
+}
+
+/* Input Base Styles */
+.creaition-input {
+  height: var(--creaition-input-height);
+  border-radius: var(--creaition-border-radius-input);
+  border: 1px solid var(--creaition-secondary-grey);
+  background-color: var(--creaition-white);
+  color: var(--creaition-text-color);
+  padding: 0 12px;
+  font-variation-settings: 
+    'wght' var(--creaition-font-weight-normal),
+    'slnt' var(--creaition-font-slant-normal);
+
+  &:focus {
+    outline: none;
+    border-color: var(--creaition-black);
+  }
+}
+
+/* Card Base Styles */
+.creaition-card {
+  background-color: var(--creaition-white);
+  border-radius: var(--creaition-border-radius-card);
+  border: 1px solid var(--creaition-secondary-grey);
+  padding: 1rem;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 640px) {
+  /* sm */
+}
+
+@media (max-width: 768px) {
+  /* md */
+}
+
+@media (max-width: 1024px) {
+  /* lg */
+}
+
+@media (max-width: 1280px) {
+  /* xl */
+}

@@ -1,0 +1,62 @@
+<div class="image-history creaition-card">
+  <div class="history-header">
+    <h3 class="panel-title">Image History</h3>
+    <div class="header-actions">
+      <!-- <button 
+        mat-icon-button
+        class="creaition-button"
+        (click)="showFavoritesOnly = !showFavoritesOnly"
+        [title]="showFavoritesOnly ? 'Show All' : 'Show Favorites'">
+        <mat-icon>{{ showFavoritesOnly ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button> -->
+      <!-- <button 
+        mat-icon-button
+        class="creaition-button"
+        (click)="onClearHistory()"
+        title="Clear History">
+        <mat-icon>delete_sweep</mat-icon>
+      </button> -->
+    </div>
+  </div>
+
+  <div class="history-stats">
+    <span class="stat-item">Total: {{ images.length }}</span>
+    <span class="stat-item">Favorites: {{ favorites.length }}</span>
+  </div>
+
+  <div class="images-grid" *ngIf="displayedImages.length > 0; else emptyState">
+    <div 
+      *ngFor="let image of displayedImages"
+      class="image-item"
+      (click)="onImageClick(image)">
+      <img [src]="'data:image/png;base64,' + image.image" [alt]="image.prompt">
+      <div class="image-overlay">
+        <button 
+          mat-icon-button
+          class="favorite-button"
+          (click)="onToggleFavorite(image); $event.stopPropagation()"
+          [class.favorited]="isFavorite(image.id)">
+          <mat-icon>{{ isFavorite(image.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+        <button 
+          mat-icon-button
+          class="delete-button"
+          (click)="onDeleteImage(image, $event)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="image-info">
+        <p class="image-prompt" [title]="image.prompt">{{ image.prompt }}</p>
+        <span class="image-date">{{ formatDate(image.timestamp) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <mat-icon>image</mat-icon>
+      <p>No images yet. Generate your first image using AI!</p>
+    </div>
+  </ng-template>
+</div>
+

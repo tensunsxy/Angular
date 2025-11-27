@@ -1,1 +1,66 @@
-<p>properties-panel works!</p>
+<div class="properties-panel creaition-card">
+  <h3 class="panel-title">Properties</h3>
+  
+  @if (selectedTool === 'text') {
+    <div class="property-group">
+      <label class="property-label">Font Size</label>
+      <input 
+        type="range" 
+        class="creaition-input property-range"
+        min="10" 
+        max="100" 
+        [value]="fontSize"
+        (input)="onFontSizeChange($event)"
+        aria-label="Font Size">
+      <span class="property-value">{{ fontSize }}px</span>
+    </div>
+
+    <div class="property-group">
+      <label class="property-label">Font Color</label>
+      <input 
+        type="color" 
+        class="creaition-input property-color"
+        [value]="fontColor"
+        (input)="onColorChange('fontColor', $event)"
+        aria-label="Font Color">
+    </div>
+  }
+
+  @if (selectedTool === 'draw' || selectedTool === 'shape') {
+    <div class="property-group">
+      <label class="property-label">Stroke Width</label>
+      <input 
+        type="range" 
+        class="creaition-input property-range"
+        min="1" 
+        max="20" 
+        [value]="strokeWidth"
+        (input)="onStrokeWidthChange($event)"
+        aria-label="Stroke Width">
+      <span class="property-value">{{ strokeWidth }}px</span>
+    </div>
+
+    <div class="property-group">
+      <label class="property-label">Stroke Color</label>
+      <input 
+        type="color" 
+        class="creaition-input property-color"
+        [value]="strokeColor"
+        (input)="onColorChange('strokeColor', $event)"
+        aria-label="Stroke Color">
+    </div>
+  }
+
+  <div class="property-group">
+    <label class="property-label">Opacity</label>
+    <input 
+      type="range" 
+      class="creaition-input property-range"
+      min="0" 
+      max="100" 
+      [value]="opacity"
+      (input)="onOpacityChange($event)"
+      aria-label="Opacity">
+    <span class="property-value">{{ opacity }}%</span>
+  </div>
+</div>

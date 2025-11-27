@@ -1,0 +1,78 @@
+.toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--creaition-white);
+  border-bottom: 1px solid var(--creaition-secondary-grey);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-height: 60px;
+  box-sizing: border-box;
+
+  .creaition-button {
+    white-space: nowrap;
+    min-width: fit-content;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px !important;
+    overflow: visible;
+    text-overflow: clip;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      flex-shrink: 0;
+    }
+    
+    // Ensure text is not clipped
+    span, text {
+      overflow: visible;
+      white-space: nowrap;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .toolbar {
+    padding: 12px;
+    gap: 8px;
+
+    .creaition-button {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    padding: 8px;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .creaition-button {
+      font-size: 11px;
+      padding: 6px 12px !important;
+      min-width: auto;
+      
+      // Hide text on very small screens, show only icon
+      span:not(.mat-icon) {
+        display: none;
+      }
+      
+      mat-icon {
+        margin: 0;
+      }
+    }
+  }
+}
