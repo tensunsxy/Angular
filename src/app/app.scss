@@ -70,8 +70,8 @@
   overflow-y: hidden;
   background-color: var(--creaition-background);
   border-top: 1px solid var(--creaition-secondary-grey);
-  max-height: 40vh;
-  min-height: 200px;
+  max-height: 50vh; // Increased to show more content
+  min-height: 300px; // Increased minimum height
   align-items: flex-start;
   
   // Hide scrollbar but keep functionality
@@ -99,7 +99,7 @@
 // Responsive design
 @media (max-width: 1024px) {
   .bottom-section {
-    max-height: 35vh;
+    max-height: 45vh; // Increased for better visibility
   }
 }
 

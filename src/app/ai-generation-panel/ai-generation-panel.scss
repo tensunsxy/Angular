@@ -11,9 +11,16 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100%;
+  min-height: 0; // Important for flex scrolling
   box-sizing: border-box;
   border-radius: var(--creaition-border-radius-card);
   border: 1px solid var(--creaition-secondary-grey);
+  
+  // Ensure form can scroll
+  form {
+    min-height: 0;
+    overflow-y: visible;
+  }
 
   .panel-title {
     margin: 0 0 0.5rem 0;
@@ -52,6 +59,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    max-height: none; // Remove any height restrictions
+    overflow: visible; // Ensure all chips are visible
   }
 
   .suggestion-chip {
