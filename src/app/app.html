@@ -5,7 +5,10 @@
   
   <div class="app-content">
     <div class="editor-section">
-      <app-toolbar (action)="onToolbarAction($event)"></app-toolbar>
+      <app-toolbar 
+        [selectedTool]="selectedTool"
+        (action)="onToolbarAction($event)">
+      </app-toolbar>
       <div class="editor-wrapper">
         <app-image-editor #imageEditor></app-image-editor>
       </div>

@@ -23,6 +23,7 @@
     padding: 8px 16px !important;
     overflow: visible;
     text-overflow: clip;
+    transition: all 0.2s ease;
     
     mat-icon {
       font-size: 18px;
@@ -36,6 +37,30 @@
     span, text {
       overflow: visible;
       white-space: nowrap;
+    }
+    
+    // Selected state
+    &.selected {
+      background-color: var(--creaition-primary-grey) !important;
+      color: var(--creaition-black) !important;
+      font-variation-settings: 
+        'wght' var(--creaition-font-weight-semibold),
+        'slnt' var(--creaition-font-slant-normal);
+      
+      &:hover {
+        background-color: var(--creaition-secondary-grey) !important;
+        font-variation-settings: 
+          'wght' var(--creaition-font-weight-semibold),
+          'slnt' var(--creaition-font-slant-italic);
+      }
+    }
+    
+    // Hover state (when not selected)
+    &:not(.selected):hover {
+      background-color: var(--creaition-primary-grey) !important;
+      font-variation-settings: 
+        'wght' var(--creaition-font-weight-medium),
+        'slnt' var(--creaition-font-slant-italic);
     }
   }
 }

@@ -155,7 +155,14 @@
       [class*="load-btn"],
       [class*="download-btn"],
       [id*="load"],
-      [id*="download"] {
+      [id*="download"],
+      // Hide file input and related elements
+      input[type="file"],
+      label[for*="file"],
+      // Hide any text showing file selection status
+      [class*="file"],
+      [class*="选择"],
+      [class*="未选择"] {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
@@ -165,6 +172,18 @@
         position: absolute !important;
         left: -9999px !important;
         pointer-events: none !important;
+      }
+      
+      // Specifically hide the header container
+      .tui-image-editor-header {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
       }
       
       // Hide submenu (appears when clicking menu items)

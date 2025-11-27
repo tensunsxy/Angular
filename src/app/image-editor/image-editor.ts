@@ -296,6 +296,69 @@ export class ImageEditor implements AfterViewInit, OnDestroy {
   }
 
   /**
+   * Set image opacity (0-100)
+   */
+  setImageOpacity(opacity: number): void {
+    if (this.editor) {
+      // Convert 0-100 to 0-1 range
+      const opacityValue = Math.max(0, Math.min(100, opacity)) / 100;
+      
+      // Try to set opacity through the editor's graphics API
+      const editor = this.editor as any;
+      
+      // Method 1: Try to set opacity on the image object via Fabric.js
+      if (editor._graphics) {
+        try {
+          const graphics = editor._graphics;
+          const canvas = graphics.getCanvas();
+          if (canvas && typeof canvas.getObjects === 'function') {
+            // Get all objects on the canvas
+            const objects = canvas.getObjects();
+            // Find the main image object (usually the first or largest image)
+            const imageObject = objects.find((obj: any) => {
+              return obj.type === 'image' || 
+                     obj.type === 'tuiImage' || 
+                     (obj.type === 'image' && obj.width && obj.height);
+            });
+            
+            if (imageObject && typeof imageObject.set === 'function') {
+              imageObject.set('opacity', opacityValue);
+              if (typeof canvas.renderAll === 'function') {
+                canvas.renderAll();
+              }
+              console.log('Opacity set on image object:', opacityValue);
+              return;
+            }
+          }
+        } catch (error) {
+          console.warn('Could not set opacity via graphics API:', error);
+        }
+      }
+      
+      // Method 2: Fallback - Set opacity on canvas container via CSS
+      this.setCanvasOpacity(opacityValue);
+    }
+  }
+
+  /**
+   * Set canvas opacity via CSS
+   */
+  private setCanvasOpacity(opacity: number): void {
+    const container = this.editorRef.nativeElement;
+    const canvasContainer = container.querySelector('.tui-image-editor-canvas-container') as HTMLElement;
+    const canvases = container.querySelectorAll('canvas');
+    
+    if (canvasContainer) {
+      canvasContainer.style.opacity = opacity.toString();
+    }
+    
+    // Also set opacity on all canvas elements
+    canvases.forEach((canvas: HTMLCanvasElement) => {
+      canvas.style.opacity = opacity.toString();
+    });
+  }
+
+  /**
    * Load image from file
    */
   loadImageFromFile(file: File): Promise<void> {

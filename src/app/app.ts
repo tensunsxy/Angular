@@ -17,8 +17,6 @@ export class App {
   showAIPanel: boolean = false;
   
   onToolbarAction(action: string): void {
-    this.selectedTool = action;
-    
     if (!this.imageEditor || !this.imageEditor.getEditorInstance()) {
       console.warn('Editor not initialized');
       return;
@@ -35,6 +33,8 @@ export class App {
     // Toggle AI panel when AI button is clicked
     if (action === 'ai-generate') {
       this.showAIPanel = !this.showAIPanel;
+      // Toggle selected state for AI button
+      this.selectedTool = this.selectedTool === 'ai-generate' ? '' : 'ai-generate';
       return;
     }
 
@@ -44,7 +44,7 @@ export class App {
       return;
     }
 
-    // Handle undo/redo
+    // Handle undo/redo (these don't need selected state)
     if (action === 'undo') {
       this.imageEditor.undo();
       return;
@@ -53,6 +53,14 @@ export class App {
     if (action === 'redo') {
       this.imageEditor.redo();
       return;
+    }
+
+    // Set selected tool for tool buttons (crop, filter, text, draw, shape)
+    // These buttons should retain their selected state
+    const toolButtons = ['crop', 'filter', 'text', 'draw', 'shape'];
+    if (toolButtons.includes(action)) {
+      // Toggle: if already selected, deselect; otherwise select
+      this.selectedTool = this.selectedTool === action ? '' : action;
     }
 
     // Handle tool selection - activate Tui.ImageEditor's built-in tools
@@ -162,8 +170,8 @@ export class App {
           }
           break;
         case 'opacity':
-          // Opacity is handled differently in Tui.ImageEditor
-          console.log('Opacity change:', value);
+          // Apply opacity to the image
+          this.imageEditor.setImageOpacity(value);
           break;
         default:
           console.log('Unknown property:', property);
