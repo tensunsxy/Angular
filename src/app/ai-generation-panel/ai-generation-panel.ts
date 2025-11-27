@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AIImageService, AIGenerationRequest, AIGenerationProgress } from '../services/ai-image.service';
 import { AIStateService } from '../services/ai-state.service';
@@ -24,7 +25,8 @@ import { AIStateService } from '../services/ai-state.service';
     MatSelectModule,
     MatProgressBarModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   templateUrl: './ai-generation-panel.html',
   styleUrl: './ai-generation-panel.scss'
@@ -49,7 +51,9 @@ export class AIGenerationPanel implements OnInit {
   constructor(
     private fb: FormBuilder,
     private aiService: AIImageService,
-    private stateService: AIStateService
+    private stateService: AIStateService,
+    public dialogRef?: MatDialogRef<AIGenerationPanel>,
+    @Inject(MAT_DIALOG_DATA) public data?: any
   ) {
     this.generationForm = this.createForm();
   }
@@ -134,6 +138,13 @@ export class AIGenerationPanel implements OnInit {
         
         this.progress = { status: 'completed', progress: 100 };
         this.stateService.setLoading(false);
+        
+        // Close dialog after successful generation
+        if (this.dialogRef) {
+          setTimeout(() => {
+            this.dialogRef?.close(response.image);
+          }, 1000); // Close after 1 second to show completion
+        }
       },
       error: (error) => {
         this.stateService.setError(error.message);

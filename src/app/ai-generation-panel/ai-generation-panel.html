@@ -1,5 +1,14 @@
 <div class="ai-generation-panel creaition-card">
-  <h3 class="panel-title">AI Image Generation</h3>
+  <div class="dialog-header">
+    <h3 class="panel-title">AI Image Generation</h3>
+    <button 
+      mat-icon-button 
+      class="close-button"
+      (click)="dialogRef?.close()"
+      aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
   <form [formGroup]="generationForm" (ngSubmit)="onGenerate()">
     <!-- Prompt Input -->

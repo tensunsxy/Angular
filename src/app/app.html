@@ -20,15 +20,9 @@
       [selectedTool]="selectedTool"
       (propertyChange)="onPropertyChange($event)">
     </app-properties-panel>
-    
-    @if (showAIPanel) {
-      <app-ai-generation-panel 
-        (imageGenerated)="onAIImageGenerated($event)">
-      </app-ai-generation-panel>
-    }
 
-      <app-image-history 
-        (imageSelected)="onImageSelected($event)">
-      </app-image-history>
+    <app-image-history 
+      (imageSelected)="onImageSelected($event)">
+    </app-image-history>
   </div>
 </div>

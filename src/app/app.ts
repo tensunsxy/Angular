@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageEditor } from './image-editor/image-editor';
 import { Toolbar } from './toolbar/toolbar';
 import { PropertiesPanel } from './properties-panel/properties-panel';
@@ -14,7 +15,8 @@ import { ImageHistory } from './image-history/image-history';
 export class App {
   @ViewChild(ImageEditor) imageEditor!: ImageEditor;
   selectedTool: string = '';
-  showAIPanel: boolean = false;
+  
+  constructor(private dialog: MatDialog) {}
   
   onToolbarAction(action: string): void {
     if (!this.imageEditor || !this.imageEditor.getEditorInstance()) {
@@ -30,9 +32,9 @@ export class App {
       return;
     }
     
-    // Toggle AI panel when AI button is clicked
+    // Open AI generation dialog when AI button is clicked
     if (action === 'ai-generate') {
-      this.showAIPanel = !this.showAIPanel;
+      this.openAIGenerationDialog();
       // Toggle selected state for AI button
       this.selectedTool = this.selectedTool === 'ai-generate' ? '' : 'ai-generate';
       return;
@@ -199,6 +201,31 @@ export class App {
   private getCurrentStrokeColor(): string {
     // Get current stroke color from properties panel or default
     return '#000000';
+  }
+
+  openAIGenerationDialog(): void {
+    const dialogRef = this.dialog.open(AIGenerationPanel, {
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      disableClose: false,
+      panelClass: 'ai-generation-dialog'
+    });
+
+    dialogRef.componentInstance.imageGenerated.subscribe((base64Image: string) => {
+      this.onAIImageGenerated(base64Image);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // If dialog closed with an image, load it
+        this.onAIImageGenerated(result);
+      }
+      // Reset selected tool when dialog closes
+      if (this.selectedTool === 'ai-generate') {
+        this.selectedTool = '';
+      }
+    });
   }
 
   onAIImageGenerated(base64Image: string): void {
